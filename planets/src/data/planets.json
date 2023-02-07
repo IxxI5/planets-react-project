@@ -1,0 +1,81 @@
+{
+  "planets": [
+    {
+      "id": "0",
+      "name": "Tatooine",
+      "diameter": "10465",
+      "gravity": "1 standard",
+      "terrain": "desert",
+      "population": "200000",
+      "residents": [
+        {
+          "name": "Luke Skywalker",
+          "height": "172",
+          "birth_year": "19BBY",
+          "gender": "male"
+        },
+        {
+          "name": "C-3PO",
+          "height": "167",
+          "birth_year": "112BBY",
+          "gender": "n/a"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "name": "Alderaan",
+      "diameter": "12500",
+      "gravity": "1 standard",
+      "terrain": "grasslands, mountains",
+      "population": "2000000000",
+      "residents": [
+        {
+          "name": "Leia Organa",
+          "height": "150",
+          "birth_year": "19BBY",
+          "gender": "female"
+        },
+        {
+          "name": "Bail Prestor Organa",
+          "height": "191",
+          "birth_year": "67BBY",
+          "gender": "male"
+        },
+        {
+          "name": "Raymus Antilles",
+          "height": "188",
+          "birth_year": "unknown",
+          "gender": "male"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Yavin IV",
+      "diameter": "10200",
+      "gravity": "1 standard",
+      "terrain": "jungle, rainforests",
+      "population": "1000",
+      "residents": []
+    },
+    {
+      "id": "3",
+      "name": "Hoth",
+      "diameter": "7200",
+      "gravity": "1.1 standard",
+      "terrain": "tundra, ice caves, mountain ranges",
+      "population": "unknown",
+      "residents": []
+    },
+    {
+      "id": "4",
+      "name": "Dagobah",
+      "diameter": "8900",
+      "gravity": "N/A",
+      "terrain": "swamp, jungles",
+      "population": "unknown",
+      "residents": []
+    }
+  ]
+}
