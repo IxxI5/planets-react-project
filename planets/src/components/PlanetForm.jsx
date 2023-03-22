@@ -1,5 +1,6 @@
-import { useState } from "react";
-import model from "../models/model";
+import { useState, useEffect } from "react";
+import { fetchData } from "../methods/methods";
+import SearchResults from "./SearchResults";
 
 /**
  * Planet Properties Form
@@ -17,26 +18,78 @@ export default function PlanetForm({ planets, setPlanets }) {
   const [terrain, setTerrain] = useState("");
   const [population, setPopulation] = useState("");
   const [residents, setResidents] = useState("");
+  const [planetsList, setPlanetsList] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [planet, setPlanet] = useState(null);
+
+  useEffect(() => {
+    if (planet) {
+      setName(planet.name);
+      setDiameter(planet.diameter);
+      setGravity(planet.gravity);
+      setTerrain(planet.terrain);
+      setPopulation(planet.population);
+      setResidents("");
+
+      let residents = ``;
+
+      // fetch residents data if available
+      if (planet.residents.length > 0) {
+        fetchData(planet.residents).then((data) => {
+          data.map((item, i) => {
+            residents += `${item.name},${item.height},${item.birth_year},${
+              item.gender
+            }${i + 1 < data.length ? "\n" : ""}`;
+          });
+          setResidents(residents);
+        });
+      }
+
+      setSearchResults([]);
+      setPlanet(null);
+    }
+  }, [planet]);
+
+  // retrieve all planets and setPlanetsList on App Launch
+  useEffect(() => {
+    fetchData().then((data) => {
+      setPlanetsList(data);
+    });
+  }, []);
+
+  // filter the planetsList dependend on name change
+  useEffect(() => {
+    let results = [];
+
+    results = planetsList.filter((planet) => {
+      if (planet.name.toLowerCase().startsWith(name.toLowerCase())) {
+        return planet;
+      }
+    });
+
+    setSearchResults(results);
+  }, [name, planetsList]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (name === "" || planets.some((item) => item.name === name)) {
       alert(`Error! Planet already exists or no name is entered`);
-
       return;
     }
 
-    let planet = { ...model.planet };
-    let resident = { ...model.resident };
-    let enteredResidents = [...residents.split("\n")];
+    let enteredResidents =
+      residents.length > 0 ? [...residents.split("\n")] : [];
 
-    planet.id = planets.length;
-    planet.name = name;
-    planet.diameter = diameter;
-    planet.gravity = gravity;
-    planet.terrain = terrain;
-    planet.population = population;
+    let newPlanet = {
+      id: planets.length,
+      name: name,
+      diameter: diameter,
+      gravity: gravity,
+      terrain: terrain,
+      population: population,
+      residents: [],
+    };
 
     enteredResidents.forEach((item) => {
       let [name, height, birth_year, gender] = item.split(",");
@@ -47,19 +100,17 @@ export default function PlanetForm({ planets, setPlanets }) {
       birth_year = birth_year ?? "unknown";
       gender = gender ?? "unknown";
 
-      resident.name = name;
-      resident.height = height.replace(/\s/g, "");
-      resident.birth_year = birth_year.replace(/\s/g, "");
-      resident.gender = gender.replace(/\s/g, "");
+      let resident = {
+        name: name,
+        height: height.replace(/\s/g, ""),
+        birth_year: birth_year.replace(/\s/g, ""),
+        gender: gender.replace(/\s/g, ""),
+      };
 
-      planet.residents.push(resident);
-
-      resident = {};
+      newPlanet.residents.push(resident);
     });
 
-    setPlanets([...planets, planet]);
-
-    console.log(planet);
+    setPlanets([...planets, newPlanet]);
   };
 
   return (
@@ -71,6 +122,9 @@ export default function PlanetForm({ planets, setPlanets }) {
         onChange={(e) => setName(e.target.value)}
         placeholder="Planet Name"
       />
+      {searchResults.length > 0 && (
+        <SearchResults data={searchResults} setPlanet={setPlanet} />
+      )}
       <br />
       <input
         type="text"
