@@ -31,12 +31,9 @@ td {
 th {
   background-color: black;
   color: white;
-}
-
-/* show pointer on table */
-tr:hover {
   cursor: pointer;
 }
+
 /* align text to the left for <td> and <th> of <tr> */
 th,
 td {
@@ -104,4 +101,45 @@ input[type="text"] {
 /* input text field on hover styling */
 input[type="text"]:hover {
   border: 2px #008cba solid;
+}
+
+/* button styling */
+button {
+  font-size: large;
+  color: red;
+  padding: 10px;
+  margin: auto;
+  cursor: pointer;
+}
+
+/* ul styling */
+ul {
+  position: absolute;
+  list-style: none;
+  z-index: 10;
+  width: 184px;
+  height: 180px;
+  top: -20px;
+  opacity: 0.9;
+  background-color: whitesmoke;
+  border: 1px dotted black;
+  color: blue;
+  overflow-y: scroll;
+}
+
+/* container with relative position */
+#searchResults {
+  position: relative;
+}
+
+/* li pointer */
+li {
+  position: relative;
+  cursor: pointer;
+  left: -30px;
+}
+
+/* li on hover, highlight */
+li:hover {
+  background-color: yellow;
 }
