@@ -2,6 +2,7 @@ import Planet from "./Planet";
 import { FaCaretUp } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
 import { FaArrowsAltV } from "react-icons/fa";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useState } from "react";
 import { useEffect } from "react";
 import { sortByProperty } from "../methods/methods";
@@ -18,13 +19,9 @@ export default function PlanetsList({ planets, setPlanets }) {
   const [toggle, setToggle] = useState(undefined);
   const [thName, setThName] = useState("diameter");
 
-  // on click read just the planet object within the table
-  const onClickHandler = (item) => {
-    if (item.hasOwnProperty("gravity") === false) {
-      item = null;
-    }
-
-    console.log(item);
+  // delete row through planets filtering
+  const deleteRow = (index) => {
+    setPlanets(planets.filter((item, i) => i !== index)); // item must be present although not used in condition
   };
 
   // on toggle change, trigger component re-rendering
@@ -91,8 +88,13 @@ export default function PlanetsList({ planets, setPlanets }) {
         </thead>
         <tbody>
           {planets.map((planet, i) => (
-            <tr key={planet.name} onClick={() => onClickHandler(planet)}>
+            <tr key={planet.name}>
               <Planet planet={planet} />
+              <td>
+                <button onClick={() => deleteRow(i)}>
+                  <RiDeleteBin6Fill />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
