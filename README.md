@@ -4,11 +4,7 @@ Repository von:
 
 STUD: IxxI5
 
-Status: In Progress
-
-# Mini ReactJS Project | Planets Archive
-
-## Getting Started with Create React App
+## Planets Archive React Project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
